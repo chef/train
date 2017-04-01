@@ -1,19 +1,10 @@
 # Change Log
 
-## [v0.23.0](https://github.com/chef/train/tree/v0.23.0) (2017-03-29)
-[Full Changelog](https://github.com/chef/train/compare/v0.22.1...v0.23.0)
+## [0.22.1](https://github.com/chef/train/tree/0.22.1) (2017-01-17)
+[Full Changelog](https://github.com/chef/train/compare/v0.22.0...0.22.1)
 
 **Merged pull requests:**
 
-- Fix Net::SSH warning when passing nil option values [\#172](https://github.com/chef/train/pull/172) ([tylercloke](https://github.com/tylercloke))
-- winrm: hide password [\#171](https://github.com/chef/train/pull/171) ([crepetl](https://github.com/crepetl))
-
-## [v0.22.1](https://github.com/chef/train/tree/v0.22.1) (2017-01-17)
-[Full Changelog](https://github.com/chef/train/compare/v0.22.0...v0.22.1)
-
-**Merged pull requests:**
-
-- Release 0.22.1 [\#169](https://github.com/chef/train/pull/169) ([tduffield](https://github.com/tduffield))
 - Relax net-ssh dep to allow 4.0 [\#168](https://github.com/chef/train/pull/168) ([tduffield](https://github.com/tduffield))
 - Fix Oracle Linux detection [\#167](https://github.com/chef/train/pull/167) ([carldjohnston](https://github.com/carldjohnston))
 - Add support for parallels & virtuozzo linux [\#166](https://github.com/chef/train/pull/166) ([jaxxstorm](https://github.com/jaxxstorm))
