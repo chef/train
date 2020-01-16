@@ -579,6 +579,15 @@ module Train::Platforms::Detect::Specifications
           @platform[:uuid_command] = "show version | include Processor"
           true
         end
+      plat.name("cisco_asa").title("Cisco ASA OS").in_family("cisco")
+        .detect do
+          v = cisco_show_version
+          next unless v[:type] == "asa"
+
+          @platform[:release] = v[:version]
+          @platform[:arch] = nil
+          true
+        end
 
       # brocade family
       plat.family("brocade").title("Brocade Family").in_family("os")
