@@ -121,28 +121,28 @@ describe "linux command" do
       backend.stubs(:run_command).returns(mock_connect_result("Sorry, try again", 1))
       lc = cls.new(backend, { sudo: true })
       err = _ { lc.verify! }.must_raise Train::UserError
-      _(err.message).must_match(/Sudo failed: Wrong sudo password./)
+      _(err.reason.to_s).must_match("bad_sudo_password")
     end
 
     it "error message for sudo password required" do
-      backend.stubs(:run_command).returns(mock_connect_result("sudo: no tty present and no askpass program specified", 1))
+      backend.stubs(:run_command).returns(mock_connect_result("sudo: no tty present and no program specified", 1))
       lc = cls.new(backend, { sudo: true })
       err = _ { lc.verify! }.must_raise Train::UserError
-      _(err.message).must_match(/Sudo requires a password, please configure it./)
+      _(err.message).must_match(/Sudo failed: sudo: no tty present and no program specified/)
     end
 
     it "error message for sudo: command not found" do
       backend.stubs(:run_command).returns(mock_connect_result("sudo: command not found", 1))
       lc = cls.new(backend, { sudo: true })
       err = _ { lc.verify! }.must_raise Train::UserError
-      _(err.message).must_match(/Can't find sudo command. Please either install and configure it on the target or deactivate sudo./)
+      _(err.reason.to_s).must_match("sudo_command_not_found")
     end
 
     it "error message for requires tty" do
       backend.stubs(:run_command).returns(mock_connect_result("sudo: sorry, you must have a tty to run sudo", 1))
       lc = cls.new(backend, { sudo: true })
       err = _ { lc.verify! }.must_raise Train::UserError
-      _(err.message).must_match(/Sudo failed: Sudo requires a TTY. Please see the README/)
+      _(err.reason.to_s).must_match("sudo_no_tty")
     end
 
     it "error message for other sudo related errors" do
@@ -150,6 +150,13 @@ describe "linux command" do
       lc = cls.new(backend, { sudo: true })
       err = _ { lc.verify! }.must_raise Train::UserError
       _(err.message).must_match(/Other sudo related error/)
+    end
+
+    it "error message for not enough sudo privileges for OS operations" do
+      backend.stubs(:run_command).returns(mock_connect_result("sudo: a terminal is required to read the password; either use the -S option to read from standard input or configure an askpass helper", 1))
+      lc = cls.new(backend, { sudo: true })
+      err = _ { lc.verify! }.must_raise Train::UserError
+      _(err.reason.to_s).must_match("sudo_lack_of_permission")
     end
   end
 end
