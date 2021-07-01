@@ -81,6 +81,9 @@ module Train::Extras
       when /sudo: sorry, you must have a tty to run sudo/
         ["Sudo requires a TTY. Please see the README on how to configure "\
           "sudo to allow for non-interactive usage.", :sudo_no_tty]
+      when /sudo: a terminal is required to read the password; either use/
+        ["Sudo cannot prompt for password because there is no terminal. "\
+            "Please provide the sudo password directly", :sudo_lack_of_permission]
       else
         [rawerr, nil]
       end
