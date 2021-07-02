@@ -57,6 +57,12 @@ describe "ssh transport" do
       _(connection_options.key?(:paranoid)).must_equal false
     end
 
+    it "set key_files to nil if its []" do
+      opts = { key_files: [] }
+      seen_opts = ssh.send(:connection_options, opts)
+      assert_nil(seen_opts[:keys])
+    end
+
     describe "various values are mapped appropriately for verify_host_key" do
       # This would be better:
       # Net::SSH::Version.stub_const(:CURRENT, Net::SSH::Version[5,0,1])

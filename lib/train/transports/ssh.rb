@@ -177,7 +177,7 @@ module Train::Transports
         max_wait_until_ready: opts[:max_wait_until_ready],
         auth_methods: opts[:auth_methods],
         keys_only: opts[:keys_only],
-        keys: opts[:key_files],
+        keys: (!opts[:key_files].nil? && opts[:key_files].empty?) ? nil : opts[:key_files],
         password: opts[:password],
         forward_agent: opts[:forward_agent],
         proxy_command: opts[:proxy_command],
